@@ -1,6 +1,10 @@
 import react from 'react';
-
-import Login from './src/Login';
+import Routes from './src/routes';
+import AuthProvider from './src/contexts';
 export default function App(){
-  return <Login/>
+  return(
+    <AuthProvider>
+      <Routes/>
+    </AuthProvider>
+  ) 
 }
