@@ -2,5 +2,8 @@ export const colors = {
   ligh_pink: '#f8d9c6',
   white:'#fff',
   thin_white:'#f4effa',
-  blue_purple: '#020314'
+  blue_purple: '#020314',
+  glossy_crape:'#9C89B8',
+  ash_gray:'#C2C5BB',
+  brow_sugar:'#B4654A'
 }

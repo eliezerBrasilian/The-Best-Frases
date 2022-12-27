@@ -81,7 +81,11 @@ export default function Login(){
               <TextInput style={[styles.inputText,styles.inputTextGap]} placeholder='Digite seu email' placeholderTextColor={'#f4effa'} value={email} onChangeText={(text)=>setEmail(text)}/>
               <TextInput style={[styles.inputText,styles.inputTextGap]} placeholder='Digite sua senha' placeholderTextColor={'#f4effa'} value={password} onChangeText={(text)=>setPassword(text)}/>
               <TouchableOpacity style={styles.btn}>
+              {(loadingAuth ? <ActivityIndicator color={'red'} size={30}/>
+                :
                 <Text style={styles.btnText} onPress={handleSignUp}>Cadastrar</Text>
+                )}
+                
               </TouchableOpacity>
               <TouchableOpacity>
                 <Text style={styles.dontHaveAccount}>Já tem uma conta? <Text style={{color:'#ffd500'}} onPress={toogleLogin}>Clique aqui para entrar!</Text>
