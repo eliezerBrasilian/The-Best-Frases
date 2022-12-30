@@ -872,6 +872,11 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@iabtcf/core@^1.5.3":
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@iabtcf/core/-/core-1.5.5.tgz#9b16908a01f038ca45f1fb82b7863eedbff81788"
+  integrity sha512-hOk5if1NfKdbuzEzE2FEju/PKY7mX7GXhJv3nyMm3l+e6Pl1ZFg1HYU2QkDFdZJPtDpXL2MEeF0D//p1pG9fyw==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz"
@@ -1333,8 +1338,13 @@
 
 "@react-native-firebase/storage@^16.5.0":
   version "16.5.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-16.5.0.tgz#835cea5017c6aead86dd6852889410533003108d"
+  resolved "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-16.5.0.tgz"
   integrity sha512-9rqyaLkH78xZGQ3LquUzbfAC0yXf3WOkUcRqPqeeKzXo0BzCmoFF1pE00MO6es3TxP+FQaEIDkugtAttkOtVgg==
+
+"@react-native-google-signin/google-signin@^9.0.2":
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-9.0.2.tgz#fd9d0cbb58591265c2ea9404b2d2ea7e514b9ea9"
+  integrity sha512-oTD0ZT6ZSH7CZjM1i6hR/gFAXv9As7nxhN99XGliNxf6SChZcQRwGeaz1DjoYrWExWDVX00EH1Per3dMjhAWkQ==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -2541,6 +2551,11 @@ depd@2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz"
   integrity sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==
+
+dequal@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.3.tgz#2644214f1997d39ed0ee0ece72335490a7ac67be"
+  integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
 
 destroy@1.2.0:
   version "1.2.0"
@@ -5643,6 +5658,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-app-link@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/react-native-app-link/-/react-native-app-link-1.0.1.tgz"
+  integrity sha512-usPcJMZMVvRs/lBSy/UU+ooB+h2YhMXGA47xvWVltyOQerQu4hKSWG+qG2BRKcpHmTkmFynDSf5cLWztXwAA1w==
+
 react-native-codegen@^0.70.6:
   version "0.70.6"
   resolved "https://registry.npmjs.org/react-native-codegen/-/react-native-codegen-0.70.6.tgz"
@@ -5655,8 +5675,16 @@ react-native-codegen@^0.70.6:
 
 react-native-gesture-detector@^1.1.2:
   version "1.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-detector/-/react-native-gesture-detector-1.1.2.tgz#0a9366cd865e86c20bc4d4cd74fe0b2f2b95b0a4"
+  resolved "https://registry.npmjs.org/react-native-gesture-detector/-/react-native-gesture-detector-1.1.2.tgz"
   integrity sha512-lY3l4jgr+TGlmW7eAEzxbXYE0nVQpBWCMsL3kxaLKZCZrCQI3t1YzGtO4PXKhq6LgWDKDIxc20Qp/lgCNuC5qA==
+
+react-native-google-mobile-ads@^8.2.2:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-google-mobile-ads/-/react-native-google-mobile-ads-8.2.2.tgz#ce3206726a937b2ebf0e0d6fea42f48ad92e45c8"
+  integrity sha512-UN+YtrmaNoz4a4JVDiBxGNS5vTDXElUIUEd0zY+Zr/sTYcsCkwibOJc/OqmZKlFkiwsRWdDd8DKuy5Nxtn9TsQ==
+  dependencies:
+    "@iabtcf/core" "^1.5.3"
+    use-deep-compare-effect "^1.8.1"
 
 react-native-gradle-plugin@^0.70.3:
   version "0.70.3"
@@ -5665,12 +5693,12 @@ react-native-gradle-plugin@^0.70.3:
 
 react-native-image-picker@^4.10.3:
   version "4.10.3"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.10.3.tgz#cdc11d9836b4cfa57e658c0700201babf8fdca10"
+  resolved "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.10.3.tgz"
   integrity sha512-gLX8J6jCBkUt6jogpSdA7YyaGVLGYywRzMEwBciXshihpFZjc/cRlKymAVlu6Q7HMw0j3vrho6pI8ZGC5O/FGg==
 
 react-native-share@^8.0.1:
   version "8.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-8.0.1.tgz#797fe5648d6b2b0e00ab77d27f914ea9af6d67a0"
+  resolved "https://registry.npmjs.org/react-native-share/-/react-native-share-8.0.1.tgz"
   integrity sha512-3WfdW76L21heGq00NjtcBIM9XnaAi+P0FdLjIvEI0X+oNvYtReSOorzbYnvY3HGFbdmn6Kt1dJehGQVep25HNg==
 
 react-native-vector-icons@^9.2.0:
@@ -5683,7 +5711,7 @@ react-native-vector-icons@^9.2.0:
 
 react-native-view-shot@^3.5.0:
   version "3.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.5.0.tgz#129e92b893aca25918c6ecddc08ff44f29d70c27"
+  resolved "https://registry.npmjs.org/react-native-view-shot/-/react-native-view-shot-3.5.0.tgz"
   integrity sha512-+/a0zcEcCzAwuzQTU7CmwR1/bDcuy3Yj7093xI3Dhcjccb3FwxNiRyIBonsMSj3fQMmBcqV5d8DGCAeOJ5Ij3A==
 
 react-native@0.70.6:
@@ -6830,6 +6858,14 @@ url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+use-deep-compare-effect@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.8.1.tgz#ef0ce3b3271edb801da1ec23bf0754ef4189d0c6"
+  integrity sha512-kbeNVZ9Zkc0RFGpfMN3MNfaKNvcLNyxOAAd9O4CBZ+kCBXXscn9s/4I+8ytUER4RDpEYs5+O6Rs4PqiZ+rHr5Q==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    dequal "^2.0.2"
 
 use-sync-external-store@^1.0.0:
   version "1.2.0"

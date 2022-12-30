@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor:'white'
   },
   title:{
-    fontSize:22,fontWeight:'bold'
+    fontSize:22,fontWeight:'600',color:colors.black
   },
   profileView:{
     alignItems:'center'
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     height:70,width:70,borderRadius:55/5
   },
   username:{
-    fontSize:22,fontWeight:'bold',marginLeft:10
+    fontSize:22,fontWeight:'bold',marginLeft:10,color:colors.black
   },
   changeProfileText:{
     marginLeft:10,
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
   },
   optionsText:{
     fontSize:17,fontWeight:'700',
-    marginLeft:10
+    marginLeft:10,color:colors.optionsText
   }
 })
 

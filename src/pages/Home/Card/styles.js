@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native'
+import { colors } from '../../../colors'
 export  const styles = StyleSheet.create({
   container:{
-    marginBottom:10
+    marginBottom:10, backgroundColor:colors.white
   },
   overBackground:{//esse container está pegando o mesm tamanho da imagem
     position:'absolute',
@@ -25,18 +26,18 @@ export  const styles = StyleSheet.create({
     justifyContent:'center'
   },
   authorName:{
-    fontWeight:'bold',fontSize:18
+    fontWeight:'bold',fontSize:18,color:colors.author_name
   },
   authorUsername:{
-    fontSize:11, fontWeight:'600'
+    fontSize:11, fontWeight:'600',color:colors.author_name
   },
   phrase:{
-    fontSize:18,fontWeight:'600'
+    fontSize:18,fontWeight:'600',color:colors.phrase
   },
   footer:{
-    // position:'absolute',top:0,bottom:0,right:0,left:0,marginBottom:10,
     padding:15,
     flexDirection:'row',alignItems:'flex-end',justifyContent:'space-between',
+    backgroundColor:colors.white
   },
   onLeftSide:{
     flexDirection:'row',alignItems:'center'
@@ -49,6 +50,17 @@ export  const styles = StyleSheet.create({
   },
   shareAmount:{
     fontSize:16,
-    marginRight:10
+    marginRight:10,
+    marginLeft:5,
+    color:colors.black
+  },
+  likesText:{
+    fontSize:16,
+    marginRight:10,
+    color:colors.black,
+    marginLeft:5
+  },
+  footerUsernameText:{
+    color:colors.black,fontSize:16
   }
  })
