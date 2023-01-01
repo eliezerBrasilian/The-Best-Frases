@@ -10,10 +10,6 @@ export default function AuthProvider({children}){
   const [loadingInfo,setLoadingInfo] = useState(true)
   const [appTheme,setAppTheme] = useState('moon-waxing-crescent')
   
-  function changeAppTheme(themeName){
-    setAppTheme(themeName)
-    storageAppTheme(themeName)
-  }
   useEffect(()=>{
     async function loadStorage(){
       const storageUser = await AsyncStorage.getItem('@info')
@@ -28,11 +24,22 @@ export default function AuthProvider({children}){
       if(storageAppTheme){
         setAppTheme(JSON.parse(storageAppTheme))
       }
-
     }
     loadStorage()
   },[])
+
+  function changeAppTheme(themeName){
+    setAppTheme(themeName)
+    storageAppTheme(themeName)
+  }
+  async function resetPassword(email){
+    await auth().sendPasswordResetEmail(email).then(()=>{
+      console.log('email enviado')
+    })
+  }
+
   async function signUp(email,password,name){
+    setLoadingAuth(true)
     await auth().createUserWithEmailAndPassword(email,password)
     .then(async (value)=>{
       let userId = value.user.uid;
@@ -40,7 +47,6 @@ export default function AuthProvider({children}){
       .doc(userId).set({
         nome: name,
         criado_em: new Date(),
-        senha: password
       })
       .then(()=>{
         let data = {
@@ -48,15 +54,18 @@ export default function AuthProvider({children}){
           name: name,
           email: value.user.email
         }
+        setLoadingAuth(false)
         setUser(data)
+        storageUser(data)
       })
       .catch((error)=>{ 
+        setLoadingAuth(false)
         console.log(`ERRO - ${error}`)
       })
-     
     })
     .catch((error)=>{
       console.log(`ERRO AO CADASTRAR O USUARIO - ${error}`)
+      setLoadingAuth(false)
     })
   }
 
@@ -114,6 +123,7 @@ export default function AuthProvider({children}){
       changeAppTheme, 
       appTheme, 
       signOut,
+      resetPassword
       }}>
       {children}
     </AuthContext.Provider>

@@ -2,13 +2,13 @@ import { colors } from '../../colors';
 import { StyleSheet } from 'react-native'
 export const styles = StyleSheet.create({
   background:{
-    height:'100%'
+    flex:1
   },
   container:{
     flex:1,padding:15
   },
   title:{
-    fontSize:27, fontWeight:'bold',marginTop:50,
+    fontSize:27, fontWeight:'bold',
     color:colors.white
   },
   subTitle:{
@@ -16,10 +16,10 @@ export const styles = StyleSheet.create({
   },
   inputText:{
     borderColor:colors.white,borderWidth:1,borderRadius:10,paddingLeft:15,
-    color:colors.white
+    color:colors.white,
   },
   inputTextGap:{
-    marginTop:20
+    marginTop:15
   },
   forgotPassword:{
     textAlign:'right',marginTop:10,color:colors.ligh_pink

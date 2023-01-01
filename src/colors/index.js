@@ -9,5 +9,6 @@ export const colors = {
   author_name:'#212529',
   phrase:'#403d39',
   black:'#000',
-  optionsText:'#1f2421'
+  optionsText:'#1f2421',
+  wisteria: '#CA9CE1'
 }

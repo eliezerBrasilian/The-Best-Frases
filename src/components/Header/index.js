@@ -56,10 +56,9 @@ export default function Header(){
       //enviar para o cloud storage
       uploadFileFirebase(response)
       console.log(response.assets[0].uri)
-      //pegando a imagem do storage
-      fetchImage()
     }
   })
+  setModalVisible(false)
  }
  const uploadFileFirebase = async (response) => {
   const fileSource = getFileLocalPath(response)
@@ -85,7 +84,9 @@ export default function Header(){
    }
   function callModal(){
     setModalVisible(true)
+    fetchImage()
   }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Frases</Text>
@@ -116,7 +117,7 @@ export default function Header(){
               )
             }
             </TouchableOpacity>
-            <View>
+            <View style={styles.modalViewOnTop_right}>
               <Text style={styles.username}>{user.name}</Text>
               <TouchableOpacity onPress={uploadFile}>
                 <Text style={styles.changeProfileText}>Alterar foto de perfil</Text>
