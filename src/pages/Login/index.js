@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts';
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
 export default function Login(){
-  const {signUp, signIn,loadingAuth, resetPassword} = useContext(AuthContext)
+  const {signUp, signIn,loadingAuth} = useContext(AuthContext)
   const [login,setLogin] = useState(true)
 
   const [email,setEmail] = useState('')

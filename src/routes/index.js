@@ -1,9 +1,8 @@
 import { useContext } from 'react';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
 import { AuthContext } from '../contexts';
 import { ActivityIndicator, Text, View } from 'react-native';
 import AuthRoutes from './auth.routes';
+import AppRoutes from './app.routes';
 export default function Routes(){
   const {signed,loadingInfo} = useContext(AuthContext)
   
@@ -15,6 +14,6 @@ export default function Routes(){
     
   )
   return (
-    signed? <Home/> : <AuthRoutes/>
+    signed? <AppRoutes/> : <AuthRoutes/>
   )
 }

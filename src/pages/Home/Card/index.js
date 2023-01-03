@@ -20,10 +20,7 @@ export default function Card({data}){
 
   const teste = 'ca-app-pub-3940256099942544/1033173712'
   const adUnitId = 'ca-app-pub-4318787550457876/5020362587';
-  const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-    requestNonPersonalizedAdsOnly: true,
-    keywords: ['fashion', 'clothing','soccer','music','games','game','workout'],
-  });
+  const interstitial = InterstitialAd.createForAdRequest(adUnitId);
   const [loaded, setLoaded] = useState(false);
   const [shareLoading,setShareLoading] = useState(false)
 
@@ -52,18 +49,23 @@ export default function Card({data}){
   },[loaded])
 
   async function shareImage() {
+     // Start loading the interstitial straight away
+     interstitial.load();
     setShareLoading(true)
     try{
+      interstitial.load();
       const uri = await captureRef(viewRef,{
         format:'png', quality:1.0,
       })
       await Share.open({url: uri}).then(()=>{
         setShareLoading(false)
       }).catch((error)=>{
+        interstitial.load();
         console.log(error)
         setShareLoading(false)
       })
     }catch(error){
+      interstitial.load();
       console.log(error)
       setShareLoading(false)
     }
@@ -123,6 +125,14 @@ export default function Card({data}){
      })
   }
 
+    // No advert ready to show yet
+    if (!loaded) {
+      console.log('nenhum ads foi carregado!')
+      return null;
+    }
+    else if(loaded){
+      console.log('Haha, ads foi carregado!')
+    }
   return(
     <ViewShot ref={viewRef}>
       <View style={styles.container}>
