@@ -1,5 +1,5 @@
 import React, { useCallback,useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, View } from 'react-native';
 import Header from '../../components/Header';
 import Card from './Card';
 import firestore from '@react-native-firebase/firestore';
@@ -158,7 +158,7 @@ const [emptyList,setEmptyList] = useState(false)
          onRefresh={handleRefreshPosts}
 
          onEndReached={()=> getListPosts()}
-         onEndReachedThreshold = {0.1}
+         onEndReachedThreshold = {0.25}
         />
       )
     }

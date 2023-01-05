@@ -49,6 +49,11 @@ export const styles = StyleSheet.create({
   optionsText:{
     fontSize:17,fontWeight:'700',
     marginLeft:10,color:colors.optionsText
+  },
+  bannerStyle:{
+    alignItems:'center',
+    //paddingHorizontal:15,
+    marginHorizontal:15
   }
 })
 

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image, Modal, TouchableWithoutFeedback, Linking } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Modal } from 'react-native';
 import  MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from './styles'
 import { AuthContext } from '../../contexts';
@@ -7,12 +7,17 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import AppLink from 'react-native-app-link';
 import { colors } from '../../colors';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 export default function Header(){
   const [modalVisible,setModalVisible] = useState(false)
   const {user,changeAppTheme,appTheme,signOut} = useContext(AuthContext)
   const [profileImage,setProfileImage] = useState('')
- 
+
+  
+  const adUnitId = 'ca-app-pub-4318787550457876/1812665180';
+  const teste = 'ca-app-pub-3940256099942544/6300978111'
+
   let moon = 'moon-waxing-crescent'
   let sun = 'white-balance-sunny'
 
@@ -143,6 +148,16 @@ export default function Header(){
               <Text style={styles.optionsText}>Sair de minha conta</Text>
             </View>
           </TouchableOpacity>
+          <View style={styles.bannerStyle}>
+            <BannerAd
+              unitId={adUnitId}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              requestOptions={{         
+              requestNonPersonalizedAdsOnly: true,           
+              }}          
+              />                            
+          </View>
+          
         </View>
         
     </Modal>

@@ -41,9 +41,10 @@ export default function Card({data}){
       console.log(z.data().liked)
      }
     }
-     // Start loading the interstitial straight away
-     interstitial.load();
+    
      checkingIfWasLiked()
+      // Start loading the interstitial straight away
+      interstitial.load();
      // Unsubscribe from events on unmount
      return unsubscribe;
   },[loaded])
@@ -125,14 +126,6 @@ export default function Card({data}){
      })
   }
 
-    // No advert ready to show yet
-    if (!loaded) {
-      console.log('nenhum ads foi carregado!')
-      return null;
-    }
-    else if(loaded){
-      console.log('Haha, ads foi carregado!')
-    }
   return(
     <ViewShot ref={viewRef}>
       <View style={styles.container}>
