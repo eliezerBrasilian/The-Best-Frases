@@ -1,12 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { ActivityIndicator, ImageBackground, StatusBar, Text, TextInput, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { ActivityIndicator, ImageBackground, StatusBar, Text, TextInput, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Modal, Image } from 'react-native'
 
 import { AuthContext } from '../../contexts';
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
+import auth from '@react-native-firebase/auth';
 export default function Login(){
-  const {signUp, signIn,loadingAuth} = useContext(AuthContext)
-  const [login,setLogin] = useState(true)
+  
+  const {signUp, signIn,loadingAuth,errorDescription,
+  openModalErrorLogin,setOpenModalErrorLogin} = useContext(AuthContext)
+  const [login,setLogin] = useState(false)
 
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
@@ -26,14 +30,19 @@ export default function Login(){
     navigation.navigate('forgotPassword')
   }
   function handleSignUp(){
-    if(email !== '' || password !== '' || name !== '')
+    if(name.length >0 && (email !== '' || password !== ''))
     signUp(email,password,name)
     //clearBuffer()
   }
   function handleSignIn(){
-    console.log('cliquei em login')
-    if(email !== '' || password !== '')
+   if(email !== '' && email.includes('@') ){
     signIn(email,password)
+   }
+  }
+
+
+  const closeModal = ()=>{
+    setOpenModalErrorLogin(false)
   }
 
   if(login)
@@ -70,6 +79,43 @@ export default function Login(){
                 </View>
                 </TouchableWithoutFeedback>
             </View>
+            
+              <Modal
+              visible={openModalErrorLogin}
+              onRequestClose={closeModal}
+              transparent={true}
+              >
+                <View style={{alignItems:'center',justifyContent:'center',marginVertical:'50%'}}>
+                  <LinearGradient colors={['#0061ff','#60efff']} style={styles.cardModal}>
+                  <Text style={styles.errorTitle}>
+                    {errorDescription}
+                  </Text>
+
+                      <TouchableOpacity 
+                      style={{
+                      marginTop:15,
+                      justifyContent:'center',
+                      alignItems:'center',
+                      backgroundColor:'#fff',
+                      width:90,
+                      height:90,
+                      borderRadius:7
+                      }} 
+                      onPress={closeModal}
+                      >
+                      <Image style={{height:55,width:55}} 
+                      source={require('../../assets/img/error.png')} />  
+                    </TouchableOpacity>  
+                    
+                    <TouchableOpacity style={styles.btnCloseModal} 
+                     onPress={closeModal}
+                    >
+                     <Text style={styles.buttonTextCloseModal}>Fechar</Text>
+                    </TouchableOpacity>  
+                </LinearGradient>
+                </View>
+              </Modal>
+            
           </ImageBackground>
         </KeyboardAvoidingView>
   )
@@ -104,6 +150,41 @@ export default function Login(){
                 </TouchableOpacity>
               </View>
             </View>
+            <Modal
+              visible={openModalErrorLogin}
+              onRequestClose={closeModal}
+              transparent={true}
+              >
+                <View style={{alignItems:'center',justifyContent:'center',marginVertical:'50%'}}>
+                  <LinearGradient colors={['#0061ff','#60efff']} style={styles.cardModal}>
+                  <Text style={styles.errorTitle}>
+                    {errorDescription}
+                  </Text>
+
+                      <TouchableOpacity 
+                      style={{
+                      marginTop:15,
+                      justifyContent:'center',
+                      alignItems:'center',
+                      backgroundColor:'#fff',
+                      width:90,
+                      height:90,
+                      borderRadius:7
+                      }} 
+                      onPress={closeModal}
+                      >
+                      <Image style={{height:55,width:55}} 
+                      source={require('../../assets/img/error.png')} />  
+                    </TouchableOpacity>  
+                    
+                    <TouchableOpacity style={styles.btnCloseModal} 
+                     onPress={closeModal}
+                    >
+                     <Text style={styles.buttonTextCloseModal}>Fechar</Text>
+                    </TouchableOpacity>  
+                </LinearGradient>
+                </View>
+              </Modal>
           </ImageBackground>
         </KeyboardAvoidingView>
   )

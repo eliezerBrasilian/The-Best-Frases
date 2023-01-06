@@ -9,7 +9,8 @@ export default function AuthProvider({children}){
   const [loadingAuth,setLoadingAuth] = useState(false)
   const [loadingInfo,setLoadingInfo] = useState(true)
   const [appTheme,setAppTheme] = useState('moon-waxing-crescent')
-  
+  const [openModalErrorLogin,setOpenModalErrorLogin] = useState(false)
+  const [errorDescription,setErrorDescription] = useState('')
   useEffect(()=>{
     async function loadStorage(){
       const storageUser = await AsyncStorage.getItem('@info')
@@ -64,8 +65,23 @@ export default function AuthProvider({children}){
       })
     })
     .catch((error)=>{
-      console.log(`ERRO AO CADASTRAR O USUARIO - ${error}`)
+      console.log(`ERRO AO CADASTRAR O USUARIO - ${error.code}`)
       setLoadingAuth(false)
+      if(error.code === 'auth/email-already-in-use'){
+        setErrorDescription('Este email já está cadastrado!')
+        setOpenModalErrorLogin(true)
+        return
+      }
+      if(error.code === 'auth/invalid-email'){
+        setErrorDescription('Este email é inválido!')
+        setOpenModalErrorLogin(true)
+        return
+      }
+      if(error.code === 'auth/weak-password'){
+        setErrorDescription('A senha deve ter pelo menos 6 digitos!')
+        setOpenModalErrorLogin(true)
+        return
+      }
     })
   }
 
@@ -90,7 +106,19 @@ export default function AuthProvider({children}){
     })
     .catch((error)=>{
       setLoadingAuth(false)
-      console.log(`nao foi possivel logar - ${error}`)
+      console.log(`nao foi possivel logar - ${error.code}`)
+      console.log(error.code)
+      if(error.code === 'auth/user-not-found'){
+        setOpenModalErrorLogin(true)
+        setErrorDescription('Este email não está cadastrado!')
+        return
+      }
+      if(error.code === 'auth/wrong-password'){
+        setOpenModalErrorLogin(true)
+        setErrorDescription('A senha esá errada!')
+        return
+      }
+      
     })
   }
 
@@ -123,7 +151,10 @@ export default function AuthProvider({children}){
       changeAppTheme, 
       appTheme, 
       signOut,
-      resetPassword
+      resetPassword,
+      openModalErrorLogin,
+      setOpenModalErrorLogin,
+      errorDescription,
       }}>
       {children}
     </AuthContext.Provider>
