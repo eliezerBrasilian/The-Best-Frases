@@ -3,13 +3,13 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 export const AuthContext = createContext({})
 export default function AuthProvider({children}){
   const [user,setUser] = useState(null)
   const [loadingAuth,setLoadingAuth] = useState(false)
   const [loadingInfo,setLoadingInfo] = useState(true)
   const [appTheme,setAppTheme] = useState('moon-waxing-crescent')
+<<<<<<< HEAD
   const [abrirModal,setAbrirModal] = useState(false)
   const [errorDescription,setErrorDescription] = useState('')
   const [abrirModal_forgotPassword,setAbrirModal__forgotPassword] = useState(false)
@@ -19,6 +19,10 @@ export default function AuthProvider({children}){
     setAppTheme(themeName)
     storageAppTheme(themeName)
   }
+=======
+  const [openModalErrorLogin,setOpenModalErrorLogin] = useState(false)
+  const [errorDescription,setErrorDescription] = useState('')
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
   useEffect(()=>{
     async function loadStorage(){
       const storageUser = await AsyncStorage.getItem('@info')
@@ -33,11 +37,11 @@ export default function AuthProvider({children}){
       if(storageAppTheme){
         setAppTheme(JSON.parse(storageAppTheme))
       }
-
     }
     loadStorage()
   },[])
 
+<<<<<<< HEAD
   async function forgotPassword(email){
     setLoadingAuth(true)
     await auth().sendPasswordResetEmail(email)
@@ -62,6 +66,18 @@ export default function AuthProvider({children}){
       console.log(`O ERRO FOI: ${e}`)
     })
   }
+=======
+  function changeAppTheme(themeName){
+    setAppTheme(themeName)
+    storageAppTheme(themeName)
+  }
+  async function resetPassword(email){
+    await auth().sendPasswordResetEmail(email).then(()=>{
+      console.log('email enviado')
+    })
+  }
+
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
   async function signUp(email,password,name){
     setLoadingAuth(true)
     await auth().createUserWithEmailAndPassword(email,password)
@@ -71,7 +87,6 @@ export default function AuthProvider({children}){
       .doc(userId).set({
         nome: name,
         criado_em: new Date(),
-        senha: password
       })
       .then(()=>{
         let data = {
@@ -84,19 +99,28 @@ export default function AuthProvider({children}){
         storageUser(data)
       })
       .catch((error)=>{ 
+        setLoadingAuth(false)
         console.log(`ERRO - ${error}`)
       })
-     
     })
     .catch((error)=>{
+<<<<<<< HEAD
       setLoadingAuth(false)
       if(error.code === 'auth/email-already-in-use'){
         setErrorDescription('Este email já está cadastrado!')
         setAbrirModal(true)
+=======
+      console.log(`ERRO AO CADASTRAR O USUARIO - ${error.code}`)
+      setLoadingAuth(false)
+      if(error.code === 'auth/email-already-in-use'){
+        setErrorDescription('Este email já está cadastrado!')
+        setOpenModalErrorLogin(true)
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
         return
       }
       if(error.code === 'auth/invalid-email'){
         setErrorDescription('Este email é inválido!')
+<<<<<<< HEAD
         setAbrirModal(true)
         return
       }
@@ -106,6 +130,16 @@ export default function AuthProvider({children}){
         return
       }
   
+=======
+        setOpenModalErrorLogin(true)
+        return
+      }
+      if(error.code === 'auth/weak-password'){
+        setErrorDescription('A senha deve ter pelo menos 6 digitos!')
+        setOpenModalErrorLogin(true)
+        return
+      }
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
     })
   }
 
@@ -130,13 +164,21 @@ export default function AuthProvider({children}){
     })
     .catch((error)=>{
       setLoadingAuth(false)
+<<<<<<< HEAD
       console.log(`nao foi possivel logar - ${error}`)
       if(error.code === 'auth/user-not-found'){
         setAbrirModal(true)
+=======
+      console.log(`nao foi possivel logar - ${error.code}`)
+      console.log(error.code)
+      if(error.code === 'auth/user-not-found'){
+        setOpenModalErrorLogin(true)
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
         setErrorDescription('Este email não está cadastrado!')
         return
       }
       if(error.code === 'auth/wrong-password'){
+<<<<<<< HEAD
         setAbrirModal(true)
         setErrorDescription('A senha está errada!')
         return
@@ -146,6 +188,13 @@ export default function AuthProvider({children}){
         setErrorDescription('Email inválido!')
         return
       }
+=======
+        setOpenModalErrorLogin(true)
+        setErrorDescription('A senha esá errada!')
+        return
+      }
+      
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
     })
   }
 
@@ -178,6 +227,7 @@ export default function AuthProvider({children}){
       changeAppTheme, 
       appTheme, 
       signOut,
+<<<<<<< HEAD
       abrirModal,
       setAbrirModal,
       errorDescription,
@@ -186,6 +236,12 @@ export default function AuthProvider({children}){
       setAbrirModal__forgotPassword,
       errorDescription__forgotPassword,
       errorOnSendLink_forgotPassword
+=======
+      resetPassword,
+      openModalErrorLogin,
+      setOpenModalErrorLogin,
+      errorDescription,
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
       }}>
       {children}
     </AuthContext.Provider>

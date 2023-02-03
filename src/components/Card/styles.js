@@ -1,5 +1,9 @@
 import { StyleSheet } from 'react-native'
+<<<<<<< HEAD:src/components/Card/styles.js
 import { colors } from '../../colors'
+=======
+import { colors } from '../../../colors'
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb:src/pages/Home/Card/styles.js
 export  const styles = StyleSheet.create({
   container:{
     marginBottom:10, backgroundColor:colors.white

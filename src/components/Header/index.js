@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useContext, useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -59,6 +60,83 @@ export default function Header() {
         console.log('Um erro ocorreu - ' + error);
       });
   };
+=======
+import React, {useContext, useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Modal } from 'react-native';
+import  MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
+import {styles} from './styles'
+import { AuthContext } from '../../contexts';
+import {launchImageLibrary} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import AppLink from 'react-native-app-link';
+import { colors } from '../../colors';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+
+export default function Header(){
+  const [modalVisible,setModalVisible] = useState(false)
+  const {user,changeAppTheme,appTheme,signOut} = useContext(AuthContext)
+  const [profileImage,setProfileImage] = useState('')
+
+  
+  const adUnitId = 'ca-app-pub-4318787550457876/1812665180';
+  const teste = 'ca-app-pub-3940256099942544/6300978111'
+
+  let moon = 'moon-waxing-crescent'
+  let sun = 'white-balance-sunny'
+
+  useEffect(()=>{
+    fetchImage()
+  },[])
+
+  const fetchImage = ()=>{
+    const imageRef = storage().ref('fotosDePerfil/usuario - ' + user.userId)
+    imageRef.getDownloadURL()
+    .then((uri)=>{
+      setProfileImage(uri)
+    })
+    .catch((error)=>{
+      console.log('Um erro ocorreu - ' + error)
+    })
+  }
+
+  const whatsapp = 'https://chat.whatsapp.com/H12Pk8A8hiv9Rgj3wMQxxC'
+
+  const joingWhatsappGroup = async () =>{
+    setModalVisible(false)
+    await AppLink.maybeOpenURL(whatsapp, 
+      {appName:'com.whatsapp', 
+      appStoreId:'', 
+      appStoreLocale:'', 
+      playStoreId:'https://play.google.com/store/apps/details?id=com.whatsapp' })
+    }
+
+ const uploadFile = () =>{
+  const options = {
+    noData: true,
+    mediaType: 'photo'
+  }
+  launchImageLibrary(options,(response)=>{
+    if(response.didCancel){
+      console.log('O usuario cancelou o envio')
+    }
+    else if(response.errorCode){console.log('um erro ocorreu')}
+    else{
+      //enviar para o cloud storage
+      uploadFileFirebase(response)
+      console.log(response.assets[0].uri)
+    }
+  })
+  setModalVisible(false)
+ }
+ const uploadFileFirebase = async (response) => {
+  const fileSource = getFileLocalPath(response)
+  
+  //criando o diretorio fotosDePerfil dentro de storage e dentro vai salvar o
+  //nome da imagem com o mesmo nome do id dele
+  const storageRef = storage().ref('fotosDePerfil').child('usuario - ' + user?.userId)
+  return await storageRef.putFile(fileSource)
+ }
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
 
   const whatsapp = 'https://chat.whatsapp.com/H12Pk8A8hiv9Rgj3wMQxxC';
 
@@ -112,6 +190,7 @@ export default function Header() {
     setModalVisible(false);
     signOut();
   }
+<<<<<<< HEAD
   function toogleAppTheme() {
     if (appTheme === moon) changeAppTheme(sun);
     else changeAppTheme(moon);
@@ -121,6 +200,17 @@ export default function Header() {
     fetchImage();
   }
 
+=======
+   function toogleAppTheme(){
+     if(appTheme === moon) changeAppTheme(sun)
+     else changeAppTheme(moon)
+   }
+  function callModal(){
+    setModalVisible(true)
+    fetchImage()
+  }
+  
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Frases</Text>
@@ -147,6 +237,7 @@ export default function Header() {
         <View style={styles.modal}>
           <View style={styles.modalViewOnTop}>
             <TouchableOpacity onPress={uploadFile}>
+<<<<<<< HEAD
               {profileImage === '' ? (
                 <Image
                   source={require('../../assets/img/user.png')}
@@ -158,6 +249,14 @@ export default function Header() {
                   style={styles.profileModalImage}
                 />
               )}
+=======
+            {
+              (profileImage === ''? <Image source={require('../../assets/img/user.png')}  style={styles.profileModalImage}/>
+              :
+              <Image source={{uri:profileImage}}  style={styles.profileModalImage}/>
+              )
+            }
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
             </TouchableOpacity>
             <View style={styles.modalViewOnTop_right}>
               <Text style={styles.username}>{user.name}</Text>
@@ -168,6 +267,7 @@ export default function Header() {
               </TouchableOpacity>
             </View>
           </View>
+<<<<<<< HEAD
           <View style={styles.hr} />
           <TouchableOpacity onPress={joingWhatsappGroup}>
             <View style={styles.options}>
@@ -176,21 +276,32 @@ export default function Header() {
                 size={35}
                 color={colors.black}
               />
+=======
+          <View style={styles.hr}/>
+          <TouchableOpacity onPress={joingWhatsappGroup}>
+            <View style={styles.options}>
+              <MaterialCommunityIcons name='whatsapp' size={35} color={colors.black} />
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
               <Text style={styles.optionsText}>Entrar em nosso grupo</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={toogleAppTheme}>
             <View style={styles.options}>
+<<<<<<< HEAD
               <MaterialCommunityIcons
                 name={appTheme}
                 size={35}
                 color={colors.black}
               />
+=======
+              <MaterialCommunityIcons name={appTheme} size={35} color={colors.black} />
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
               <Text style={styles.optionsText}>Alterar tema (Em breve)</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleLogOut}>
             <View style={styles.options}>
+<<<<<<< HEAD
               <MaterialCommunityIcons
                 name="logout"
                 size={35}
@@ -200,6 +311,22 @@ export default function Header() {
             </View>
           </TouchableOpacity>
           <BannerAds />
+=======
+              <MaterialCommunityIcons name='logout' size={35} color={colors.black} />
+              <Text style={styles.optionsText}>Sair de minha conta</Text>
+            </View>
+          </TouchableOpacity>
+          <View style={styles.bannerStyle}>
+            <BannerAd
+              unitId={adUnitId}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              requestOptions={{         
+              requestNonPersonalizedAdsOnly: true,           
+              }}          
+              />                            
+          </View>
+          
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
         </View>
       </Modal>
     </View>

@@ -1,13 +1,19 @@
+<<<<<<< HEAD
 import react from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+=======
+import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
 
 import Home from '../pages/Home';
 import Categories from '../pages/Categories'
 export default function AppRoutes(){
+<<<<<<< HEAD
    const tab = createBottomTabNavigator();
    
   return (
@@ -25,6 +31,11 @@ export default function AppRoutes(){
          
       }} />
       </tab.Navigator>
+=======
+  return (
+  <NavigationContainer>
+     <Home/>
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
   </NavigationContainer>
  )
 }
