@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
+import AuthRoutes from '../routes/auth.routes'
+import AppRoutes from '../routes/app.routes'
 import { AuthContext } from '../contexts';
 import { ActivityIndicator, Text, View } from 'react-native';
 
@@ -12,9 +12,8 @@ export default function Routes(){
         <ActivityIndicator size={50} color={'blue'} />
         <Text>Carregando...</Text>
     </View>
-    
   )
   return (
-    signed? <Home/> : <Login/>
+    signed? <AppRoutes/> : <AuthRoutes/>
   )
 }

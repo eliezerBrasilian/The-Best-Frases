@@ -1,4 +1,8 @@
 {
   "name": "TheBestFrases",
-  "displayName": "TheBestFrases"
+  "displayName": "TheBestFrases",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4318787550457876~7866017778",
+    "ios_app_id": "ca-app-pub-xxxxxxxx~xxxxxxxx"
+  }
 }

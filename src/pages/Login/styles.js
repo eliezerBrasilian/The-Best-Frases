@@ -8,21 +8,22 @@ export const styles = StyleSheet.create({
     flex:1,padding:15
   },
   title:{
-    fontSize:27, fontWeight:'bold',marginTop:50,
+    fontSize:27, fontWeight:'bold',marginTop:5,
     color:colors.white
   },
   subTitle:{
-    marginBottom:50, fontSize:19,color:colors.thin_white
+    marginBottom:50, fontSize:19,color:colors.thin_white, fontSize:18
   },
   inputText:{
     borderColor:colors.white,borderWidth:1,borderRadius:10,paddingLeft:15,
-    color:colors.white
+    color:colors.white,fontSize:17
+
   },
   inputTextGap:{
-    marginTop:20
+    marginTop:12
   },
   forgotPassword:{
-    textAlign:'right',marginTop:10,color:colors.ligh_pink
+    textAlign:'right',marginTop:10,color:colors.ligh_pink, fontSize:17
   },
   btn:{
     padding:15,backgroundColor:colors.white,borderRadius:10,
@@ -30,9 +31,9 @@ export const styles = StyleSheet.create({
     marginTop:50
   },
   btnText:{
-    color:colors.blue_purple,fontWeight:'600',fontSize:17
+    color:colors.blue_purple,fontWeight:'600',fontSize:19
   },
   dontHaveAccount:{
-    textAlign:'center',marginTop:10,color:colors.ligh_pink
+    textAlign:'center',marginTop:10,color:colors.ligh_pink, fontSize:17
   }
 })

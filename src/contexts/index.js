@@ -10,7 +10,11 @@ export default function AuthProvider({children}){
   const [loadingAuth,setLoadingAuth] = useState(false)
   const [loadingInfo,setLoadingInfo] = useState(true)
   const [appTheme,setAppTheme] = useState('moon-waxing-crescent')
-  
+  const [abrirModal,setAbrirModal] = useState(false)
+  const [errorDescription,setErrorDescription] = useState('')
+  const [abrirModal_forgotPassword,setAbrirModal__forgotPassword] = useState(false)
+  const [errorDescription__forgotPassword,setErrorDescription__forgotPassword] = useState('')
+  const [errorOnSendLink_forgotPassword,setErrorOnSendLink_forgotPassword] = useState(false)
   function changeAppTheme(themeName){
     setAppTheme(themeName)
     storageAppTheme(themeName)
@@ -33,7 +37,33 @@ export default function AuthProvider({children}){
     }
     loadStorage()
   },[])
+
+  async function forgotPassword(email){
+    setLoadingAuth(true)
+    await auth().sendPasswordResetEmail(email)
+    .then(()=>{
+      setLoadingAuth(false)
+      setAbrirModal__forgotPassword(true)
+      setErrorOnSendLink_forgotPassword(false)
+      setErrorDescription__forgotPassword('O link para alterar a senha foi enviado para seu email!')
+    })
+    .catch((e)=>{
+      setLoadingAuth(false)
+      setAbrirModal__forgotPassword(true)
+      setErrorOnSendLink_forgotPassword(true)
+      if(e.code == 'auth/invalid-email'){
+        setErrorDescription__forgotPassword('O email é inválido!')
+      }
+      if(e.code == 'auth/user-not-found'){
+        setErrorDescription__forgotPassword('O email não está cadastrado!')
+      }
+      
+
+      console.log(`O ERRO FOI: ${e}`)
+    })
+  }
   async function signUp(email,password,name){
+    setLoadingAuth(true)
     await auth().createUserWithEmailAndPassword(email,password)
     .then(async (value)=>{
       let userId = value.user.uid;
@@ -49,7 +79,9 @@ export default function AuthProvider({children}){
           name: name,
           email: value.user.email
         }
+        setLoadingAuth(false)
         setUser(data)
+        storageUser(data)
       })
       .catch((error)=>{ 
         console.log(`ERRO - ${error}`)
@@ -57,7 +89,23 @@ export default function AuthProvider({children}){
      
     })
     .catch((error)=>{
-      console.log(`ERRO AO CADASTRAR O USUARIO - ${error}`)
+      setLoadingAuth(false)
+      if(error.code === 'auth/email-already-in-use'){
+        setErrorDescription('Este email já está cadastrado!')
+        setAbrirModal(true)
+        return
+      }
+      if(error.code === 'auth/invalid-email'){
+        setErrorDescription('Este email é inválido!')
+        setAbrirModal(true)
+        return
+      }
+      if(error.code === 'auth/weak-password'){
+        setErrorDescription('A senha está muito curta!')
+        setAbrirModal(true)
+        return
+      }
+  
     })
   }
 
@@ -83,6 +131,21 @@ export default function AuthProvider({children}){
     .catch((error)=>{
       setLoadingAuth(false)
       console.log(`nao foi possivel logar - ${error}`)
+      if(error.code === 'auth/user-not-found'){
+        setAbrirModal(true)
+        setErrorDescription('Este email não está cadastrado!')
+        return
+      }
+      if(error.code === 'auth/wrong-password'){
+        setAbrirModal(true)
+        setErrorDescription('A senha está errada!')
+        return
+      }
+      if(error.code === 'auth/invalid-email'){
+        setAbrirModal(true)
+        setErrorDescription('Email inválido!')
+        return
+      }
     })
   }
 
@@ -115,6 +178,14 @@ export default function AuthProvider({children}){
       changeAppTheme, 
       appTheme, 
       signOut,
+      abrirModal,
+      setAbrirModal,
+      errorDescription,
+      forgotPassword,
+      abrirModal_forgotPassword,
+      setAbrirModal__forgotPassword,
+      errorDescription__forgotPassword,
+      errorOnSendLink_forgotPassword
       }}>
       {children}
     </AuthContext.Provider>

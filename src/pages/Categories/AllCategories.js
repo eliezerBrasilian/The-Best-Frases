@@ -1,13 +1,16 @@
+import {Text, View, ActivityIndicator, FlatList} from 'react-native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useCallback, useState} from 'react';
-import {ActivityIndicator, View} from 'react-native';
-import Header from '../../components/Header';
-import Card from '../../components/Card';
 import firestore from '@react-native-firebase/firestore';
-import {useFocusEffect} from '@react-navigation/native';
+import styled from 'styled-components';
+import {colors} from '../../colors';
 import {FlashList} from '@shopify/flash-list';
 import BannerAds from '../../components/BannerAds';
-export default function Home() {
-  const [frases, setFrases] = useState([]);
+
+export default function AllCategories() {
+  const nav = useNavigation();
+
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [lastItem, setLastItem] = useState('');
@@ -18,29 +21,26 @@ export default function Home() {
       let isActive = true;
       function fetchPosts() {
         firestore()
-          .collection('Frases')
-          .orderBy('curtidas', 'desc')
-          .limit(5)
+          .collection('Categorias')
           .get()
           .then(snapshot => {
             //se o usuario ta na tela vamos buscar os posts
             if (isActive) {
-              setFrases([]); //garantindo que nossa useState está vazia
-              const frasesList = [];
+              setCategories([]); //garantindo que nossa useState está vazia
+              const categList = [];
               //percorrer o snapshot
 
               snapshot.docs.map(u => {
                 //estou dentro de meus docs e vou empurrar eles para dentro de frasesList
-                frasesList.push({
+                categList.push({
                   ...u.data(),
                   key: u.id,
                 });
               });
 
               setEmptyList(!!snapshot.empty);
-              setFrases(frasesList);
+              setCategories(categList);
               setLastItem(snapshot.docs[snapshot.docs.length - 1]);
-              console.log(lastItem);
               setLoading(false);
             }
           })
@@ -59,8 +59,7 @@ export default function Home() {
   );
 
   return (
-    <View style={{paddingHorizontal: 10, flex: 1, backgroundColor: '#fff'}}>
-      <Header />
+    <Container style={{flex: 1, backgroundColor: colors.thin_white}}>
       {loading ? (
         <ActivityIndicator
           size={90}
@@ -69,13 +68,38 @@ export default function Home() {
         />
       ) : (
         <FlashList
-          data={frases}
+          data={categories}
           keyExtractor={item => item.key}
-          renderItem={({item}) => <Card data={item} />}
-          estimatedItemSize={10}
+          estimatedItemSize={75}
+          renderItem={({item}) => (
+            <Titulo
+              data={item}
+              onPress={() => {
+                nav.navigate('FrasesInsideCategorie', {
+                  nome_categoria: item.key,
+                });
+              }}>
+              {item.key}
+            </Titulo>
+          )}
         />
       )}
       <BannerAds />
-    </View>
+    </Container>
   );
 }
+
+const Container = styled.View`
+  padding-left: 10px;
+  padding-right: 10px;
+`;
+const Titulo = styled.Text`
+  font-size: 20px;
+  color: black;
+  text-align: center;
+  font-weight: 700;
+  background-color: ${colors.glossy_crape};
+  margin-top: 12px;
+  padding: 10px 15px;
+  border-radius: 9px;
+`;
