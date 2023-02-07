@@ -139,8 +139,18 @@ android {
         applicationId "com.thebestfrases"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
+<<<<<<< HEAD
         versionCode 6
         versionName "1.0.5"
+=======
+<<<<<<< HEAD
+        versionCode 7
+        versionName "1.0.6"
+=======
+        versionCode 3
+        versionName "1.0.2"
+>>>>>>> 4da6e131d7dd19c77e51d39c899329b7d98fd9bb
+>>>>>>> e6a78e8434cc2819307dd595b56316e7346d6a2c
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {

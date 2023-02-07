@@ -58,6 +58,7 @@ export default function Home() {
     }, []),
   );
 
+<<<<<<< HEAD
   return (
     <View style={{paddingHorizontal: 10, flex: 1, backgroundColor: '#fff'}}>
       <Header />
@@ -78,4 +79,18 @@ export default function Home() {
       <BannerAds />
     </View>
   );
+=======
+  return(
+  <View style={{paddingHorizontal:10,flex:1}}>
+    <Header/>
+    <FlatList 
+    data={rtData} 
+    keyExtractor = {item => item.key}
+    renderItem={({item})=><Card data = {item} />}
+    />
+    
+  </View>
+    
+  )
+>>>>>>> e6a78e8434cc2819307dd595b56316e7346d6a2c
 }
