@@ -1,33 +1,49 @@
 import React, {useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image, Modal, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Modal } from 'react-native';
 import  MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import {styles} from './styles'
 import { AuthContext } from '../../contexts';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import AppLink from 'react-native-app-link';
+import { colors } from '../../colors';
+import BannerAds from '../BannerAds';
 
 export default function Header(){
   const [modalVisible,setModalVisible] = useState(false)
   const {user,changeAppTheme,appTheme,signOut} = useContext(AuthContext)
   const [profileImage,setProfileImage] = useState('')
- 
+
   let moon = 'moon-waxing-crescent'
   let sun = 'white-balance-sunny'
 
   useEffect(()=>{
-    const fetchImage = ()=>{
-      const imageRef = storage().ref('fotosDePerfil/usuario - ' + user.userId)
-      imageRef.getDownloadURL()
-      .then((uri)=>{
-        setProfileImage(uri)
-      })
-      .catch((error)=>{
-        console.log('Um erro ocorreu - ' + error)
-      })
-    }
     fetchImage()
   },[])
- 
+
+  const fetchImage = ()=>{
+    const imageRef = storage().ref('fotosDePerfil/usuario - ' + user.userId)
+    imageRef.getDownloadURL()
+    .then((uri)=>{
+      setProfileImage(uri)
+    })
+    .catch((error)=>{
+      console.log('Um erro ocorreu - ' + error)
+    })
+  }
+
+  const whatsapp = 'https://chat.whatsapp.com/H12Pk8A8hiv9Rgj3wMQxxC'
+
+  const joingWhatsappGroup = async () =>{
+
+    //setModalVisible(false)
+    await AppLink.maybeOpenURL(whatsapp, 
+      {appName:'com.whatsapp', 
+      appStoreId:'', 
+      appStoreLocale:'', 
+      playStoreId:'https://play.google.com/store/apps/details?id=com.whatsapp' })
+    }
+
  const uploadFile = () =>{
   const options = {
     noData: true,
@@ -41,11 +57,10 @@ export default function Header(){
     else{
       //enviar para o cloud storage
       uploadFileFirebase(response)
-      
       console.log(response.assets[0].uri)
-  
     }
   })
+  setModalVisible(false)
  }
  const uploadFileFirebase = async (response) => {
   const fileSource = getFileLocalPath(response)
@@ -71,7 +86,9 @@ export default function Header(){
    }
   function callModal(){
     setModalVisible(true)
+    fetchImage()
   }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Frases</Text>
@@ -101,10 +118,8 @@ export default function Header(){
               <Image source={{uri:profileImage}}  style={styles.profileModalImage}/>
               )
             }
-              
-              
             </TouchableOpacity>
-            <View>
+            <View style={styles.modalViewOnTop_right}>
               <Text style={styles.username}>{user.name}</Text>
               <TouchableOpacity onPress={uploadFile}>
                 <Text style={styles.changeProfileText}>Alterar foto de perfil</Text>
@@ -112,22 +127,25 @@ export default function Header(){
             </View>
           </View>
           <View style={styles.hr}/>
-          <View style={styles.options}>
-            <MaterialCommunityIcons name='whatsapp' size={35} />
-            <Text style={styles.optionsText}>Entrar em nosso grupo</Text>
-          </View>
+          <TouchableOpacity onPress={joingWhatsappGroup}>
+            <View style={styles.options}>
+              <MaterialCommunityIcons name='whatsapp' size={35} color={colors.black} />
+              <Text style={styles.optionsText}>Entrar em nosso grupo</Text>
+            </View>
+          </TouchableOpacity>
           <TouchableOpacity onPress={toogleAppTheme}>
             <View style={styles.options}>
-              <MaterialCommunityIcons name={appTheme} size={35} />
-              <Text style={styles.optionsText}>Alterar tema</Text>
+              <MaterialCommunityIcons name={appTheme} size={35} color={colors.black} />
+              <Text style={styles.optionsText}>Alterar tema (Em breve)</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleLogOut}>
             <View style={styles.options}>
-              <MaterialCommunityIcons name='logout' size={35} />
+              <MaterialCommunityIcons name='logout' size={35} color={colors.black} />
               <Text style={styles.optionsText}>Sair de minha conta</Text>
             </View>
           </TouchableOpacity>
+          <BannerAds/>
         </View>
         
     </Modal>

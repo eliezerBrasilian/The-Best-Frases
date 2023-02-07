@@ -3,14 +3,23 @@ import { ActivityIndicator, ImageBackground, StatusBar, Text, TextInput, Touchab
 
 import { AuthContext } from '../../contexts';
 import { styles } from './styles';
+import ErroModal from './ErroModal';
+import { useNavigation } from '@react-navigation/native';
+
 export default function Login(){
   const {signUp, signIn,loadingAuth} = useContext(AuthContext)
-  const [login,setLogin] = useState(true)
 
+  const [login,setLogin] = useState(false)
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const [name,setName] = useState('')
 
+  const nav = useNavigation()
+
+  function handleForgotPassword(){
+    //avancar pra tela de enviar link pra redefinir a senha
+    nav.navigate('ForgotPassword')
+  }
   function clearBuffer(){
     setEmail('')
     setPassword('')
@@ -22,12 +31,16 @@ export default function Login(){
   }
 
   function handleSignUp(){
-    signUp(email,password,name)
-    //clearBuffer()
+    if(name != '' && email != '' && password != ''
+    ){
+      signUp(email.trim(),password,name)
+    }
   }
   function handleSignIn(){
-    console.log('hahahha')
-    signIn(email,password)
+    if(email != '' && password != '' ){
+       signIn(email.trim(),password)
+    }
+   
   }
 
   if(login)
@@ -44,23 +57,23 @@ export default function Login(){
 
             <View>
               <TextInput style={styles.inputText} placeholder='Digite seu email' placeholderTextColor={'#f4effa'} value={email} onChangeText={(text)=>setEmail(text)}/>
-              <TextInput style={[styles.inputText,styles.inputTextGap]} placeholder='Digite sua senha' placeholderTextColor={'#f4effa'} value={password} onChangeText={(text)=>setPassword(text)}/>
-              <TouchableOpacity>
-                <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
+              <TextInput secureTextEntry={true} style={[styles.inputText,styles.inputTextGap]} placeholder='Digite sua senha' placeholderTextColor={'#f4effa'} value={password} onChangeText={(text)=>setPassword(text)}/>
+              <TouchableOpacity onPress={handleForgotPassword}>
+                <Text  style={styles.forgotPassword}>Esqueceu a senha?</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity style={styles.btn} onPress={handleSignIn}>
                 {(loadingAuth ? <ActivityIndicator color={'red'} size={30}/>
                 :
-                <Text style={styles.btnText} onPress={handleSignIn}>Acessar</Text>
+                <Text style={styles.btnText}>Acessar</Text>
                 )}
                 
               </TouchableOpacity>
-              <TouchableOpacity>
-                <Text style={styles.dontHaveAccount}>Não tem uma conta?<Text style={{color:'#ffd500'}} onPress={toogleLogin}> Cadastre-se aqui!</Text>
+              <TouchableOpacity onPress={toogleLogin}>
+                <Text style={styles.dontHaveAccount}>Não tem uma conta?<Text style={{color:'#ffd500'}}> Cadastre-se aqui!</Text>
                 </Text>
               </TouchableOpacity>
             </View>
-            
+            <ErroModal/>
           </View>
         </ImageBackground>
   )
@@ -79,20 +92,20 @@ export default function Login(){
             <View>
             <TextInput style={styles.inputText} placeholder='Digite seu nome completo' placeholderTextColor={'#f4effa'} value={name} onChangeText={(text)=>setName(text)}/>
               <TextInput style={[styles.inputText,styles.inputTextGap]} placeholder='Digite seu email' placeholderTextColor={'#f4effa'} value={email} onChangeText={(text)=>setEmail(text)}/>
-              <TextInput style={[styles.inputText,styles.inputTextGap]} placeholder='Digite sua senha' placeholderTextColor={'#f4effa'} value={password} onChangeText={(text)=>setPassword(text)}/>
-              <TouchableOpacity style={styles.btn}>
+              <TextInput secureTextEntry={true} style={[styles.inputText,styles.inputTextGap]} placeholder='Crie uma senha' placeholderTextColor={'#f4effa'} value={password} onChangeText={(text)=>setPassword(text)}/>
+              <TouchableOpacity style={styles.btn} onPress={handleSignUp}>
               {(loadingAuth ? <ActivityIndicator color={'red'} size={30}/>
                 :
-                <Text style={styles.btnText} onPress={handleSignUp}>Cadastrar</Text>
+                <Text style={styles.btnText}>Cadastrar</Text>
                 )}
                 
               </TouchableOpacity>
-              <TouchableOpacity>
-                <Text style={styles.dontHaveAccount}>Já tem uma conta? <Text style={{color:'#ffd500'}} onPress={toogleLogin}>Clique aqui para entrar!</Text>
+              <TouchableOpacity onPress={toogleLogin}>
+                <Text style={styles.dontHaveAccount}>Já tem uma conta? <Text style={{color:'#ffd500'}}>Clique aqui para entrar!</Text>
                 </Text>
               </TouchableOpacity>
             </View>
-            
+            <ErroModal/>
           </View>
         </ImageBackground>
   )
